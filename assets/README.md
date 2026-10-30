@@ -1,0 +1,10 @@
+# 共通tokenizer
+
+`paligemma_tokenizer.model`は8構成で共有するPaliGemma SentencePieceモデルです。
+既存のローカルファイルをSHA256照合してコピーしたもので、ダウンロードはしていません。
+Checkpointパッケージや旧Bundle内のtokenizerを実行時に探索する必要はありません。
+
+SHA256: `8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6`
+
+通常は起動スクリプトがこのファイルを読み取り専用でコンテナへ渡します。
+別の共通配置を使用する場合だけ`PIPER_TOKENIZER_PATH`を指定します。

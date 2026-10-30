@@ -1,0 +1,33 @@
+model:
+  checkpoint: /package
+  manifest: /package-runtime/manifest.yaml
+policy:
+  host: 127.0.0.1
+  port: 8001
+  action_type: joint_absolute
+  action_horizon: 50
+observation:
+  left_topic: /followerL/joint_states_single
+  right_topic: /followerR/joint_states_single
+  front_topic: /camera/front/compressed
+  left_wrist_topic: /camera/left_wrist/compressed
+  right_wrist_topic: /camera/right_wrist/compressed
+  timeout_s: 0.5
+  max_skew_s: 0.15
+  rotate_ccw_quarter_turns: {front: 0, left_wrist: 0, right_wrist: 0}
+recording:
+  enabled: true
+  root: /logs
+  queue_size: 512
+runtime:
+  dry_run: true
+  max_execution_steps: 0  # 0=unlimited; counts published absolute 14D Actions
+  control_rate_hz: 20.0
+  execution_chunk_length: 20
+  prefetch_start_index: 15
+  inference_timeout_s: 2.0
+  startup_timeout_s: 5.0
+  controller_start_timeout_s: 2.0
+  # Controller publishes at 20 Hz by default; allow ten periods of ROS jitter.
+  # Start ACK + matching RUNNING status share controller_start_timeout_s.
+  controller_status_timeout_s: 0.5

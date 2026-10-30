@@ -1,0 +1,56 @@
+model:
+  checkpoint: /package
+  manifest: /package-runtime/manifest.yaml
+policy:
+  host: 127.0.0.1
+  port: 8000
+  action_type: joint_absolute
+  action_horizon: 50
+observation:
+  state_topic: /joint_states_single
+  front_camera_topic: /camera/front/compressed
+  wrist_camera_topic: /camera/wrist/compressed
+  ee_pose_topic: /end_pose
+  image_size: 224
+  state_key: observation/state
+  front_key: observation/image
+  wrist_key: observation/wrist_image
+robot:
+  approved_action_topic: /vla/approved_action
+  hold_topic: /vla/hold
+  frame_id: piper_base
+safety:
+  z_enabled: true
+  z_min: 0.15
+logging:
+  enabled: true
+  root: /logs
+recording:
+  # /logs is bind-mounted from ${LOG_ROOT:-$HOME/piper_logs} on the host.
+  root: /logs
+  # Producer callbacks use non-blocking enqueue; this bounds image backlog.
+  queue_size: 512
+  gripper_range_m: [0.0, 0.10]
+  gripper_saturation_margin_m: 0.01
+pbl8:
+  # The camera mask is physical. PBL8 training still rotated the wrist image.
+  wrist_rotate_left_90: true
+  gripper_open_width_m: 0.10
+  finger_qpos_max_m: 0.035
+  # Fallback used only when the PiPER controller ROS parameter is unavailable.
+  max_translation_delta_m: 0.003
+  max_rotation_delta_rad: 0.01
+runtime:
+  dry_run: false
+  # Policy is requested once for the initial chunk and once per later chunk.
+  # This remains its latency deadline, not a continuous inference frequency.
+  inference_rate_hz: 20.0
+  # Whole-request bound, separate from the statistics target above.
+  inference_timeout_s: 2.0
+  # First request of each explicit Start only (includes initial compilation).
+  initial_inference_timeout_s: 30.0
+  control_rate_hz: 20.0
+  execution_chunk_length: 20
+  prefetch_start_index: 17
+  statistics_period_s: 5.0
+  prompt: "Pick the object in the green area and place it in the read area."

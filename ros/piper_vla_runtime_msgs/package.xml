@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>piper_vla_runtime_msgs</name>
+  <version>0.1.0</version>
+  <description>ROS service interfaces shared by PiPER and piper_vla_runtime.</description>
+  <maintainer email="noreply@example.invalid">PiPER</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+</package>

@@ -1,0 +1,35 @@
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Python environments and caches
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Runtime outputs and model bundles
+/logs/
+/checkpoints/
+/piper_checkpoints/
+/checkpoint/
+/validation/
+*.npz
+*.log
+*.mcap
+*.bag
+
+# Editor and backup files
+.vscode/
+.idea/
+.DS_Store
+*.orig
+*.rej
+*~
+
+.venv-tests/
